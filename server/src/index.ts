@@ -1,8 +1,10 @@
-import express from "express";
+import {app} from './server';
+import connectDB from './db/db'
+import {PORT} from './config/config';
 
-const app = express();
 
-app.listen(4000,()=>{
-    console.log("respuiesta");
+connectDB()
 
+app.listen(PORT,()=>{
+    console.log("server o port :",PORT );
 });
