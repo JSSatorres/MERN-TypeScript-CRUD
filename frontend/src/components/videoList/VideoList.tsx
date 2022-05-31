@@ -1,21 +1,15 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-
-interface Video {
-  createdAt: String;
-  description: String;
-  title: String;
-  updatedAt: String;
-  url: String;
-  _id: String;
-}
+import { getVideos } from "../../services/services";
+import { Video } from "../../utils";
 
 const VideoList = () => {
   const [videos, setVideos] = useState<Array<Video>>([]);
+
   const loadVideos = async () => {
-    const res = await axios.get("http://localhost:4000/videos");
-    setVideos(res.data.data);
+    const resp = await getVideos();
+    setVideos(resp.data.data)
   };
+
   useEffect(() => {
     loadVideos();
   }, []);
@@ -23,7 +17,18 @@ const VideoList = () => {
   return (
     <div className="text-dark mt-5 pt-5">
       {videos.map((video, index) => {
-        return <div key={index}> {video.title} </div>;
+        return (
+          <div
+            className="card text-white bg-dark mb-3 col-md-4  px-1  border border-warning rounded-5"
+            key={index}
+          >
+            <div className="card-header">{video.title}</div>
+            <div className="card-body">
+              {/* <img src={url} alt={title} /> */}
+              <p> {video.description}</p>
+            </div>
+          </div>
+        );
       })}
     </div>
   );
